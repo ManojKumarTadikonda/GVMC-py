@@ -7,9 +7,12 @@ import joblib
 
 app = Flask(__name__)
 
-# Load the trained model and scaler
-model = load_model('bin_overflow_predictor.h5', compile=False)
-scaler = joblib.load('scaler.pkl')
+try:
+    # Load the trained model and scaler
+    model = load_model('bin_overflow_predictor.h5', compile=False)
+    scaler = joblib.load('scaler.pkl')
+except Exception as e:
+    raise RuntimeError(f"Failed to load model or scaler: {str(e)}")
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -50,5 +53,5 @@ def predict():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__== '__main__':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3000, debug=True)
