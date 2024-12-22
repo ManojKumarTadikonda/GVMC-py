@@ -8,8 +8,8 @@ import joblib
 app = Flask(__name__)
 
 # Load the trained model and scaler
-model = load_model('bin_overflow_predictor.h5', compile=False)
-scaler = joblib.load('scaler.pkl')
+model = load_model('python/bin_overflow_predictor.h5', compile=False)
+scaler = joblib.load('python/scaler.pkl')
 
 @app.route('/predict', methods=['POST'])
 def predict():
